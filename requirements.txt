@@ -3,8 +3,8 @@ requests
 beautifulsoup4
 gtts
 moviepy==1.0.3
-imageio
-imageio-ffmpeg
+imageio[ffmpeg]
+imageio[pyav]
 numpy
 Pillow
 google-api-python-client
