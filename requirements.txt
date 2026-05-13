@@ -1,9 +1,9 @@
 openai
-moviepy
-gtts
 requests
 beautifulsoup4
+gtts
+moviepy==1.0.3
+imageio
+imageio-ffmpeg
+numpy
 Pillow
-google-api-python-client
-google-auth
-google-auth-oauthlib
