@@ -7,16 +7,24 @@ client = OpenAI(
 )
 
 def generate_script(topic):
+
     prompt = f"""
-    Create a short 20-second viral script about {topic}.
-    Make it engaging, fast, and social-media style.
+    Create a viral YouTube Shorts script about: {topic}
+
+    Include:
+    - Strong hook in first line
+    - Fast pacing
+    - Short sentences
+    - Curiosity gap
+
+    Keep under 25 seconds.
     """
 
     response = client.chat.completions.create(
         model="meta/llama-3.1-70b-instruct",
         messages=[{"role": "user", "content": prompt}],
-        temperature=0.7,
-        max_tokens=150
+        temperature=0.8,
+        max_tokens=200
     )
 
     return response.choices[0].message.content
