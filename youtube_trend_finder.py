@@ -1,3 +1,5 @@
+# src/youtube_trend_finder.py
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -5,14 +7,19 @@ def get_trending_ai_topics():
     url = "https://www.youtube.com/results?search_query=ai+tools"
     headers = {"User-Agent": "Mozilla/5.0"}
 
-    res = requests.get(url, headers=headers)
-    soup = BeautifulSoup(res.text, "html.parser")
+    response = requests.get(url, headers=headers)
 
-    titles = []
+    soup = BeautifulSoup(response.text, "html.parser")
 
-    for link in soup.find_all("a"):
-        title = link.get("title")
+    topics = []
+
+    for a in soup.find_all("a"):
+        title = a.get("title")
         if title and len(title) > 20:
-            titles.append(title)
+            topics.append(title)
 
-    return titles[:2] if titles else ["Top AI tools", "New AI websites"]
+    # fallback if nothing found
+    if not topics:
+        return ["Top AI tools 2026", "Best AI websites"]
+
+    return topics[:2]
