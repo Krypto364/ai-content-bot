@@ -1,6 +1,7 @@
 name: AI Content Bot
 
 on:
+  workflow_dispatch:   # ✅ THIS ENABLES RUN BUTTON
   schedule:
     - cron: '0 */8 * * *'
 
