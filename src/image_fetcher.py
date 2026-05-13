@@ -1,11 +1,17 @@
+# src/image_fetcher.py
+
 import requests
+from PIL import Image
+from io import BytesIO
 
 def fetch_image(query, filename):
     url = f"https://source.unsplash.com/720x1280/?{query}"
-    img_data = requests.get(url).content
+
+    response = requests.get(url)
+
+    img = Image.open(BytesIO(response.content)).convert("RGB")
 
     path = f"assets/temp/{filename}.jpg"
-    with open(path, "wb") as f:
-        f.write(img_data)
+    img.save(path, "JPEG")
 
     return path
