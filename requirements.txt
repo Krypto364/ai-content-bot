@@ -3,4 +3,4 @@ moviepy
 gtts
 requests
 beautifulsoup4
-playwright
+Pillow
