@@ -2,9 +2,7 @@ name: AI Content Bot
 
 on:
   schedule:
-    - cron: '0 3 * * *'
-    - cron: '0 9 * * *'
-    - cron: '0 15 * * *'
+    - cron: '0 */8 * * *'
 
 jobs:
   run-bot:
