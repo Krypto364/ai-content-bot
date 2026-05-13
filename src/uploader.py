@@ -4,26 +4,28 @@ import os
 import json
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-from google.oauth2.credentials import Credentials
 
 def upload_video(file_path, title):
 
-    print("📤 Starting YouTube Upload...")
+    print("📤 Uploading to YouTube...")
 
-    # Load credentials
-    creds = Credentials.from_authorized_user_info(
-        json.loads(os.getenv("YOUTUBE_CLIENT_SECRET"))
-    )
+    credentials_json = os.getenv("YOUTUBE_CREDENTIALS")
 
-    youtube = build("youtube", "v3", credentials=creds)
+    if not credentials_json:
+        print("❌ No YouTube credentials found")
+        return
+
+    creds_dict = json.loads(credentials_json)
+
+    youtube = build("youtube", "v3", developerKey=creds_dict.get("api_key"))
 
     request = youtube.videos().insert(
         part="snippet,status",
         body={
             "snippet": {
                 "title": title,
-                "description": "🔥 AI Tools & Tech Updates Daily",
-                "tags": ["AI", "Tech", "Tools", "Shorts"],
+                "description": "🔥 AI Tools & Tech Updates",
+                "tags": ["AI", "Tools", "Tech"],
                 "categoryId": "28"
             },
             "status": {
@@ -35,4 +37,4 @@ def upload_video(file_path, title):
 
     response = request.execute()
 
-    print("✅ Uploaded to YouTube:", response["id"])
+    print("✅ Uploaded:", response["id"])
