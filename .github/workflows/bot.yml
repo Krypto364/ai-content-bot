@@ -1,7 +1,7 @@
 name: AI Content Bot
 
 on:
-  workflow_dispatch:   # ✅ THIS ENABLES RUN BUTTON
+  workflow_dispatch:
   schedule:
     - cron: '0 */8 * * *'
 
@@ -19,9 +19,17 @@ jobs:
         python-version: "3.10"
 
     - name: Install Dependencies
-      run: pip install -r requirements.txt
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
 
     - name: Run Bot
       env:
         NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
       run: python src/main.py
+
+    - name: Upload Videos (Artifacts)
+      uses: actions/upload-artifact@v3
+      with:
+        name: generated-videos
+        path: assets/output/
