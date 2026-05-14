@@ -1,6 +1,5 @@
 # src/main.py
 
-from youtube_trend_finder import get_trending_ai_topics
 from script_generator import generate_script
 from image_fetcher import fetch_image
 from video_generator import create_video
@@ -9,37 +8,31 @@ from uploader import upload_video
 import os
 
 def run_bot():
-    print("🚀 AI CONTENT BOT STARTED")
+    print("🚀 TEST MODE: ONE VIDEO")
 
     os.makedirs("assets/output", exist_ok=True)
     os.makedirs("assets/temp", exist_ok=True)
 
-    topics = get_trending_ai_topics()
+    topic = "Top AI tools 2026"
 
-    if not topics:
-        topics = ["Top AI tools", "Best AI websites"]
+    try:
+        script = generate_script(topic)
+        print("✅ Script generated")
 
-    for i, topic in enumerate(topics[:2]):
-        print(f"\n📊 Topic {i+1}: {topic}")
+        image_path = fetch_image("AI technology", "test_img")
+        print("✅ Image fetched")
 
-        try:
-            script = generate_script(topic)
-            print("✅ Script generated")
+        output_path = "assets/output/test_video.mp4"
 
-            image_path = fetch_image("AI technology", f"img_{i}")
-            print("✅ Image fetched")
+        create_video(script, image_path, output_path)
+        print("✅ Video created")
 
-            output_path = f"assets/output/video_{i}.mp4"
+        upload_video(output_path, topic)
 
-            create_video(script, image_path, output_path)
-            print("✅ Video created")
+    except Exception as e:
+        print("❌ Error:", str(e))
 
-            upload_video(output_path, topic)
-
-        except Exception as e:
-            print(f"❌ Error: {e}")
-
-    print("\n🎉 BOT RUN COMPLETED")
+    print("🎉 TEST COMPLETED")
 
 if __name__ == "__main__":
     run_bot()
