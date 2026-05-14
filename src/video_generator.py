@@ -12,7 +12,6 @@ def create_video(text, image_path, output):
 
     audio = AudioFileClip(audio_path)
 
-    # Create simple video (image + audio)
     video = (
         ImageClip(image_path)
         .set_duration(audio.duration)
